@@ -5,10 +5,29 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
+
+	"github.com/neovim/go-client/nvim"
 )
+
+const nvimTTYCommand = "echo system('readlink -f /proc/'.getpid().'/fd/0')"
+
+func getNvimTTY(addr string) string {
+	v, err := nvim.Dial(addr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer v.Close()
+	out, err := v.CommandOutput(nvimTTYCommand)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return strings.TrimSpace(out)
+}
 
 func normalEsc(b64 string) string {
 	return "\x1B]52;;" + b64 + "\x1B\x5C"
@@ -87,10 +106,19 @@ func run() error {
 	if len(b) == 0 {
 		return nil
 	}
+	out := os.Stdout
+	if nvim := os.Getenv("NVIM_LISTEN_ADDRESS"); nvim != "" {
+		tty := getNvimTTY(nvim)
+		out, err = os.OpenFile(tty, syscall.O_WRONLY, 0)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer out.Close()
+	}
 
 	esc := chooseEsc()
 	b64 := base64.RawStdEncoding.EncodeToString(b)
-	fmt.Print(esc(b64))
+	fmt.Fprint(out, esc(b64))
 	return nil
 }
 

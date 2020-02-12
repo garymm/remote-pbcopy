@@ -1,4 +1,4 @@
-# remote pbcopy for iTerm2
+# remote pbcopy for use over ssh
 
 `pbcopy` is a well-known macOS tool that copies data to the clipboard.
 It's very useful, but available only in your local machine, not in remote machines.
@@ -10,24 +10,21 @@ I prepared a simple tool that is `pbcopy` for remote machines.
 
 ## Install
 
-1. First, make sure you use iTerm2 version 3.0.0 or later.
-2. Copy a preferred `pbcopy` to a directory where `$PATH` is set.
+Copy `pbcopy` to a directory where `$PATH` is set.
 
        [local]  $ ssh remote
-
-       # If you prefer a self-contained binary, then
-       [remote] $ wget -O pbcopy-linux-amd64.tar.gz https://github.com/skaji/remote-pbcopy-iterm2/releases/latest/download/pbcopy-linux-amd64.tar.gz
+       [remote] $ wget -O pbcopy-linux-amd64.tar.gz https://github.com/stuart-warren/remote-pbcopy/releases/latest/download/pbcopy-linux-amd64.tar.gz
        [remote] $ tar xf pbcopy-linux-amd64.tar.gz
        [remote] $ mv pbcopy /path/to/bin/
 
-       # If you prefer a perl script, then
-       [remote] $ wget https://raw.githubusercontent.com/skaji/remote-pbcopy-iterm2/master/pbcopy
-       [remote] $ chmod +x pbcopy
-       [remote] $ mv pbcopy /path/to/bin/
+### iTerm2
 
-3. Check "Applications in terminal may access clipboard" in iTerm2 Preferences:
+Features required are not enabled by default
 
-    ![preferences.png](https://raw.githubusercontent.com/skaji/remote-pbcopy-iterm2/master/misc/preferences.png)
+1. First, make sure you use iTerm2 version 3.0.0 or later
+2. Check "Applications in terminal may access clipboard" in iTerm2 Preferences:
+
+    ![preferences.png](https://raw.githubusercontent.com/stuart-warren/remote-pbcopy/master/misc/preferences.png)
 
 ## Usage
 
@@ -41,7 +38,7 @@ Just like the normal `pbcopy`:
 
 ## How about `pbpaste`?
 
-Currently iTerm2 does not allow OSC 52 read access for security reasons.
+Currently most terminals do not allow OSC 52 read access for security reasons.
 But we can just use command+V key to paste content from clipboard.
 
 If you want to save the content of clipboard to a remote file, try this:
@@ -49,6 +46,13 @@ If you want to save the content of clipboard to a remote file, try this:
     [remote] cat > out.txt
     # press command+V to paste content of clipboard,
     # and press control+D which indicats EOF
+
+## Tested with
+
+* [iTerm2](https://iterm2.com/)
+* [Alacritty](https://github.com/alacritty/alacritty)
+* [abduco](http://www.brain-dump.org/projects/abduco/)
+* [neovim terminal](https://neovim.io/doc/user/nvim_terminal_emulator.html)
 
 ## See also
 
@@ -60,10 +64,16 @@ For OSC52
 * https://chromium.googlesource.com/apps/libapps/+/HEAD/hterm/etc/osc52.vim
 * https://chromium.googlesource.com/apps/libapps/+/HEAD/hterm/etc/osc52.el
 * https://chromium.googlesource.com/apps/libapps/+/HEAD/hterm/etc/osc52.sh
+* https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
+* https://github.com/fcpg/vim-osc52
 
 ## Author
 
-Shoichi Kaji
+[Shoichi Kaji](https://github.com/skaji/)
+
+## Contributors
+
+* Stuart Warren
 
 ## License
 
