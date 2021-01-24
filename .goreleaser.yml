@@ -1,20 +1,50 @@
+# Make sure to check the documentation at http://goreleaser.com
+before:
+  hooks:
+  - go mod tidy
 builds:
-  - main: ./cmd/pbcopy
-    binary: pbcopy
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-      - darwin
-    goarch:
-      - amd64
-checksum:
-  name_template: 'pbcopy-checksums.txt'
+- id: pbcopy
+  main: ./cmd/pbcopy
+  binary: pbcopy
+  env:
+  - CGO_ENABLED=0
+  goos:
+  - linux
+  goarch:
+  - amd64
 archives:
-  - name_template: "pbcopy-{{ .Os }}-{{ .Arch }}"
+- replacements:
+    linux: Linux
+    amd64: x86_64
+  files:
+  - README.md
+  - LICENSE
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
 changelog:
   sort: asc
   filters:
     exclude:
-      - '^docs:'
-      - '^test:'
+    - '^docs:'
+    - '^test:'
+    - Merge pull request
+    - Merge branch
+    - go mod tidy
+brews:
+- name: pbcopy
+  tap:
+    owner: stuart-warren
+    name: homebrew-apps
+    token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
+  folder: Formula
+  homepage:  https://github.com/stuart-warren/remote-pbcopy
+  description: pbcopy for linux that works in the terminal over ssh
+  license: MIT
+  test: |
+    system "#{bin}/pbcopy -h"
+  dependencies:
+  - name: go
+  install: |-
+    bin.install "pbcopy"
