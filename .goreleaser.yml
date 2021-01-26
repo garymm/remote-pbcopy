@@ -35,7 +35,7 @@ changelog:
 brews:
 - name: pbcopy
   tap:
-    owner: stuart-warren
+    owner: bottlerocketlabs
     name: homebrew-apps
     token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
   folder: Formula
