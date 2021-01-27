@@ -1,4 +1,4 @@
-module github.com/stuart-warren/remote-pbcopy
+module github.com/bottlerocketlabs/remote-pbcopy
 
 go 1.13
 

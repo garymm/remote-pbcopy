@@ -13,7 +13,7 @@ I prepared a simple tool that is `pbcopy` for remote machines.
 Copy `pbcopy` to a directory where `$PATH` is set.
 
        [local]  $ ssh remote
-       [remote] $ wget -O pbcopy-linux-amd64.tar.gz https://github.com/stuart-warren/remote-pbcopy/releases/latest/download/pbcopy-linux-amd64.tar.gz
+       [remote] $ wget -O pbcopy-linux-amd64.tar.gz https://github.com/bottlerocketlabs/remote-pbcopy/releases/latest/download/pbcopy-linux-amd64.tar.gz
        [remote] $ tar xf pbcopy-linux-amd64.tar.gz
        [remote] $ mv pbcopy /path/to/bin/
 
@@ -24,7 +24,7 @@ Features required are not enabled by default
 1. First, make sure you use iTerm2 version 3.0.0 or later
 2. Check "Applications in terminal may access clipboard" in iTerm2 Preferences:
 
-    ![preferences.png](https://raw.githubusercontent.com/stuart-warren/remote-pbcopy/master/misc/preferences.png)
+    ![preferences.png](https://raw.githubusercontent.com/bottlerocketlabs/remote-pbcopy/master/misc/preferences.png)
 
 ## Usage
 

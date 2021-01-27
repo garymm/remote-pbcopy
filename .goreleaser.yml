@@ -39,7 +39,7 @@ brews:
     name: homebrew-apps
     token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
   folder: Formula
-  homepage:  https://github.com/stuart-warren/remote-pbcopy
+  homepage:  https://github.com/bottlerocketlabs/remote-pbcopy
   description: pbcopy for linux that works in the terminal over ssh
   license: MIT
   test: |
