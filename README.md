@@ -6,16 +6,16 @@ It's very useful, but available only in your local machine, not in remote machin
 Fortunately, with OSC52 escape sequence,
 we can access the local machine clipboard via a remote machine.
 
-I prepared a simple tool that is `pbcopy` for remote machines.
+I prepared a simple tool that is `rpbcopy` for remote machines.
 
 ## Install
 
-Copy `pbcopy` to a directory where `$PATH` is set.
+Copy `rpbcopy` to a directory where `$PATH` is set.
 
        [local]  $ ssh remote
-       [remote] $ wget -O pbcopy-linux-amd64.tar.gz https://github.com/bottlerocketlabs/remote-pbcopy/releases/latest/download/pbcopy-linux-amd64.tar.gz
-       [remote] $ tar xf pbcopy-linux-amd64.tar.gz
-       [remote] $ mv pbcopy /path/to/bin/
+       [remote] $ wget -O rpbcopy-linux-amd64.tar.gz https://github.com/bottlerocketlabs/remote-pbcopy/releases/latest/download/rpbcopy-linux-amd64.tar.gz
+       [remote] $ tar xf rpbcopy-linux-amd64.tar.gz
+       [remote] $ mv rpbcopy /path/to/bin/
 
 ### iTerm2
 
@@ -31,7 +31,7 @@ Features required are not enabled by default
 Just like the normal `pbcopy`:
 
     [local]  $ ssh remote
-    [remote] $ date | pbcopy
+    [remote] $ date | rpbcopy
     [remote] $ exit
     [local]  $ pbpaste
     Sun Jan 18 20:28:03 JST 2015

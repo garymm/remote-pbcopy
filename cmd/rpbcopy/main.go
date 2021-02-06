@@ -94,7 +94,7 @@ func run() error {
 		b, err = ioutil.ReadAll(os.Stdin)
 	} else {
 		if os.Args[1] == "-h" || os.Args[1] == "--help" {
-			fmt.Print("Usage:\n  pbcopy FILE\n  some-command | pbcopy\n")
+			fmt.Print("Usage:\n  rpbcopy FILE\n  some-command | rpbcopy\n")
 			os.Exit(1)
 		}
 		b, err = ioutil.ReadFile(os.Args[1])
