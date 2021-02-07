@@ -52,14 +52,14 @@ publishers:
 - name: deb
   ids:
   - deb
-  cmd: hack/publish_deb {{ abs .ArtifactPath }} {{ .ArtifactName }} {{ .Arch }}
+  cmd: hack/publish_deb {{ abs .ArtifactPath }} {{ .ArtifactName }} {{ replace .Arch "x86_64" "amd64" }}
   env:
   - ARTIFACTORY_USERNAME={{ .Env.ARTIFACTORY_USERNAME }}
   - ARTIFACTORY_SECRET={{ .Env.ARTIFACTORY_SECRET }}
 - name: apk
   ids:
   - apk
-  cmd: hack/publish_apk {{ abs .ArtifactPath }} {{ .ArtifactName }} {{ .Arch }}
+  cmd: hack/publish_apk {{ abs .ArtifactPath }} {{ .ArtifactName }} {{ replace .Arch "amd64" "x86_64" }}
   env:
   - ARTIFACTORY_USERNAME={{ .Env.ARTIFACTORY_USERNAME }}
   - ARTIFACTORY_SECRET={{ .Env.ARTIFACTORY_SECRET }}
