@@ -2,6 +2,7 @@
 before:
   hooks:
   - go mod tidy
+project_name: rpbcopy
 builds:
 - id: rpbcopy
   main: ./cmd/rpbcopy
@@ -35,13 +36,18 @@ changelog:
     - go mod tidy
 nfpms:
 - id: deb
-  package_name: rpbcopy
   formats:
   - deb
+  description: "{{ .GitURL	}}"
+  maintainer: "Stuart Warren"
 - id: apk
-  package_name: rpbcopy
+  file_name_template: "{{ .ProjectName }}-{{ .Version }}"
+  replacements:
+      amd64: x86_64
   formats:
   - apk
+  description: "{{ .GitURL	}}"
+  maintainer: "Stuart Warren"
 publishers:
 - name: deb
   ids:
