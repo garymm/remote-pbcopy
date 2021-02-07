@@ -2,9 +2,9 @@
 before:
   hooks:
   - go mod tidy
-project_name: rpbcopy
+project_name: &name rpbcopy
 brews:
-- name: "{{ .ProjectName }}"
+- name: *name
   tap:
     owner: bottlerocketlabs
     name: homebrew-apps
@@ -14,15 +14,15 @@ brews:
   description: &description rpbcopy for linux that works in the terminal over ssh
   license: &license MIT
   test: |
-    system "#{bin}/{{ .ProjectName }} -h"
+    system "#{bin}/rpbcopy -h"
   dependencies:
   - name: go
   install: |-
-    bin.install "{{ .ProjectName }}"
+    bin.install "rpbcopy"
 builds:
-- id: "{{ .ProjectName }}"
-  main: "./cmd/{{ .ProjectName }}"
-  binary: "{{ .ProjectName }}"
+- id: *name
+  main: "./cmd/rpbcopy"
+  binary: *name
   env:
   - CGO_ENABLED=0
   goos:
