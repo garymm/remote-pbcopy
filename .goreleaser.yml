@@ -3,10 +3,26 @@ before:
   hooks:
   - go mod tidy
 project_name: rpbcopy
+brews:
+- name: "{{ .ProjectName }}"
+  tap:
+    owner: bottlerocketlabs
+    name: homebrew-apps
+    token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
+  folder: Formula
+  homepage: &homepage https://github.com/bottlerocketlabs/remote-pbcopy
+  description: &description rpbcopy for linux that works in the terminal over ssh
+  license: &license MIT
+  test: |
+    system "#{bin}/{{ .ProjectName }} -h"
+  dependencies:
+  - name: go
+  install: |-
+    bin.install "{{ .ProjectName }}"
 builds:
-- id: rpbcopy
-  main: ./cmd/rpbcopy
-  binary: rpbcopy
+- id: "{{ .ProjectName }}"
+  main: "./cmd/{{ .ProjectName }}"
+  binary: "{{ .ProjectName }}"
   env:
   - CGO_ENABLED=0
   goos:
@@ -38,16 +54,20 @@ nfpms:
 - id: deb
   formats:
   - deb
-  description: "{{ .GitURL	}}"
+  description: *description
   maintainer: "Stuart Warren"
+  license: *license
+  homepage: *homepage
 - id: apk
   file_name_template: "{{ .ProjectName }}-{{ .Version }}"
   replacements:
       amd64: x86_64
   formats:
   - apk
-  description: "{{ .GitURL	}}"
+  description: *description
   maintainer: "Stuart Warren"
+  license: *license
+  homepage: *homepage
 publishers:
 - name: deb
   ids:
@@ -63,19 +83,3 @@ publishers:
   env:
   - ARTIFACTORY_USERNAME={{ .Env.ARTIFACTORY_USERNAME }}
   - ARTIFACTORY_SECRET={{ .Env.ARTIFACTORY_SECRET }}
-brews:
-- name: rpbcopy
-  tap:
-    owner: bottlerocketlabs
-    name: homebrew-apps
-    token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
-  folder: Formula
-  homepage:  https://github.com/bottlerocketlabs/remote-pbcopy
-  description: rpbcopy for linux that works in the terminal over ssh
-  license: MIT
-  test: |
-    system "#{bin}/rpbcopy -h"
-  dependencies:
-  - name: go
-  install: |-
-    bin.install "rpbcopy"
