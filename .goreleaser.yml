@@ -5,7 +5,7 @@ before:
 project_name: &name rpbcopy
 brews:
 - name: *name
-  tap:
+  repository:
     owner: bottlerocketlabs
     name: homebrew-apps
     token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
@@ -32,9 +32,13 @@ builds:
   - amd64
   - arm64
 archives:
-- replacements:
-    darwin: Darwin
-    linux: Linux
+# The default, but we add "title" before Os to capitalize it.
+- name_template: >-
+    {{ .ProjectName }}_
+    {{ .Version }}_
+    {{ title .Os }}_
+    {{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}
+
   files:
   - README.md
   - LICENSE
@@ -60,9 +64,7 @@ nfpms:
   license: *license
   homepage: *homepage
 - id: apk
-  file_name_template: "{{ .ProjectName }}-{{ .Version }}"
-  replacements:
-      amd64: x86_64
+  file_name_template: "{{ .ConventionalFileName }}"
   formats:
   - apk
   description: *description
